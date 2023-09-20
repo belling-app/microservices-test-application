@@ -4,6 +4,7 @@ import express from 'express'
 import logger from 'morgan'
 import usersRouter from './routes/users.routes'
 import { dbConnection } from './db/dbConnection'
+import unknownEndpoint from './middlewares/unknownEndpoint'
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.use(logger('dev'))
 
 // Routes
 app.use('/', usersRouter)
+app.use(unknownEndpoint)
 
 // TODO error handling
 
