@@ -5,6 +5,11 @@ import bcrypt from 'bcryptjs'
 export class UsersService {
   /**
    * Register a user with email
+   * @returns User
+   * @throws EmailAlreadyExists
+   * @throws UsernameAlreadyRegistered
+   * @throws InvalidUsernameLength
+   * @throws InvalidPasswordLength
    */
   async registerUserWithEmail (username: string, email: string, password: string): Promise<object> {
     /**
@@ -24,6 +29,8 @@ export class UsersService {
 
   /**
    * Authenticate user with email
+   * @returns User
+   * @throws InvalidCredentials
    */
   async authenticateUserWithEmail (email: string, password: string): Promise<object> {
     const user = await User.findOne({ email })
@@ -31,12 +38,21 @@ export class UsersService {
     return user
   }
 
+  /**
+   * Get user info by user id
+   * @returns User
+   * @throws UserNotFound
+   */
   async retrieveUserInfoById (id: string): Promise<object> {
     const user = await User.findById(id)
     if (user == null) throw new UserNotFound()
     return user
   }
 
+  /**
+   * Get all users info
+   * @returns User[]
+   */
   async retrieveAllUsersInfo (): Promise<object[]> {
     const users = await User.find()
     return users
