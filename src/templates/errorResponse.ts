@@ -1,1 +1,1 @@
-export default (error: unknown): object => ({ error })
+export default (error: unknown, field?: string): object => ({ field, error })

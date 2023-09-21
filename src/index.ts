@@ -5,6 +5,7 @@ import logger from 'morgan'
 import usersRouter from './routes/users.routes'
 import { dbConnection } from './db/dbConnection'
 import unknownEndpoint from './middlewares/unknownEndpoint'
+import errorHandler from './middlewares/errorHandler'
 
 const app = express()
 
@@ -13,9 +14,11 @@ app.use(logger('dev'))
 
 // Routes
 app.use('/', usersRouter)
+app.use(errorHandler)
 app.use(unknownEndpoint)
 
 // TODO error handling
+// TODO create a response template
 
 dbConnection()
   .then(() => {

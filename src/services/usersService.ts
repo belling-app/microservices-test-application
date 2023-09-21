@@ -6,7 +6,7 @@ export class UsersService {
   /**
    * Register a user with email
    * @returns User
-   * @throws EmailAlreadyExists
+   * @throws EmailAlreadyRegistered
    * @throws UsernameAlreadyRegistered
    * @throws InvalidUsernameLength
    * @throws InvalidPasswordLength
@@ -34,7 +34,7 @@ export class UsersService {
    */
   async authenticateUserWithEmail (email: string, password: string): Promise<object> {
     const user = await User.findOne({ email })
-    if (user == null || !bcrypt.compareSync(user.password, password)) throw new InvalidCredentials()
+    if (user == null || !bcrypt.compareSync(password, user.password)) throw new InvalidCredentials()
     return user
   }
 
